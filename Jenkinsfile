@@ -13,7 +13,6 @@ pipeline {
  stage('Run Tests') {
  parallel {
  stage('Backend Tests') {
-         when { expression { params.RUN_FRONTEND_TESTS } }
 
  steps {
  sh 'node ./backend/test.js'
@@ -28,6 +27,22 @@ pipeline {
  }
  }
  }
+
+
+ }
+ stage('Deploy') {
+ when {
+ expression { env.GIT_BRANCH == 'origin/main' }
+ }
+ steps {
+ echo 'Deploying...'
+ }
+ }
+ }
+}
+
+
+
  }
 
 }
