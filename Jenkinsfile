@@ -7,10 +7,16 @@ pipeline {
  parameters {
  booleanParam(name: "RUN_FRONTEND_TESTS", defaultValue: true)
  }
+
+  parameters {
+ booleanParam(name: "RUN_Backend_TESTS", defaultValue: true)
+ }
  stages {
  stage('Run Tests') {
  parallel {
  stage('Backend Tests') {
+         when { expression { params.RUN_Backend_TESTS } }
+
  steps {
  sh 'node ./backend/test.js'
  }
